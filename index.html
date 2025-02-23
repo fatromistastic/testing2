@@ -14,8 +14,7 @@
       width: 300px;
       margin-top: 10px;
       white-space: pre-wrap; /* Preserve line breaks and white space */
-      min-height: 50px;  /* Optional minimum height */
-      /* Remove fixed height so the box expands with content */
+      min-height: 50px;
     }
   </style>
   <script>
@@ -40,8 +39,8 @@
         let rows = parsedData.data;
         console.log("All rows:", rows);
 
-        // Filter out rows that don't have any text in the second column.
-        rows = rows.filter(row => row[1] && row[1].trim() !== "");
+        // Filter out rows that don't have any text in the first column.
+        rows = rows.filter(row => row[0] && row[0].trim() !== "");
         console.log("Filtered rows:", rows);
 
         if (rows.length === 0) {
@@ -49,9 +48,9 @@
           return;
         }
 
-        // Pick a random row from the filtered rows.
+        // Pick a random row (text is in the first column)
         const randomIndex = Math.floor(Math.random() * rows.length);
-        let selectedText = rows[randomIndex][1];
+        let selectedText = rows[randomIndex][0];
         console.log("Selected text:", selectedText);
 
         // Display the selected text in the text box.
@@ -71,6 +70,7 @@
   <p>This is additional text that always appears below the box.</p>
 </body>
 </html>
+
 
 
 
