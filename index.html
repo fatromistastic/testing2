@@ -17,42 +17,50 @@
       white-space: pre-wrap; /* Preserve line breaks and white space */
     }
   </style>
-  <script>
-    // This async function fetches the CSV file, parses it with PapaParse,
-    // picks a random row (assuming the text is in the first column), and displays it.
-    async function displayText() {
-      try {
-        // Fetch the CSV file (ensure texts.csv is in the same directory)
-        const response = await fetch('texts.csv');
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const csvText = await response.text();
-
-        // Use PapaParse to parse the CSV text.
-        // It correctly handles cells with commas, line breaks, and multiple paragraphs.
-        const parsedData = Papa.parse(csvText, {
-          header: false,
-          skipEmptyLines: true,
-        });
-
-        // parsedData.data is an array of rows, where each row is an array of cell values.
-        const rows = parsedData.data;
-        // Pick a random row (assuming text is stored in the first column)
-        const randomIndex = Math.floor(Math.random() * rows.length);
-        let selectedText = rows[randomIndex][0];
-
-        // Remove a leading comma, if present
-        selectedText = selectedText.replace(/^,/, '');
-
-        // Display the selected text in the text box
-        document.getElementById("textBox").innerHTML = selectedText;
-      } catch (error) {
-        console.error("Error fetching or processing CSV file:", error);
-        document.getElementById("textBox").innerHTML = "Error loading text.";
+ <script>
+  async function displayText() {
+    try {
+      // Fetch the CSV file (ensure texts.csv is in the same directory)
+      const response = await fetch('texts.csv');
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
+      const csvText = await response.text();
+      console.log("CSV file content:", csvText); // Debug: Log the raw CSV text
+
+      // Use PapaParse to parse the CSV text.
+      const parsedData = Papa.parse(csvText, {
+        header: false,
+        skipEmptyLines: true,
+      });
+      console.log("Parsed CSV data:", parsedData); // Debug: Log the parsed data
+
+      // parsedData.data is an array of rows
+      const rows = parsedData.data;
+      console.log("Rows:", rows); // Debug: Log the rows array
+
+      if (rows.length === 0) {
+        document.getElementById("textBox").innerHTML = "CSV file is empty.";
+        return;
+      }
+
+      // Pick a random row (assuming text is stored in the first column)
+      const randomIndex = Math.floor(Math.random() * rows.length);
+      let selectedText = rows[randomIndex][0];
+      console.log("Selected text before cleaning:", selectedText); // Debug
+
+      // Remove a leading comma, if present
+      selectedText = selectedText.replace(/^,/, '');
+      console.log("Selected text after cleaning:", selectedText); // Debug
+
+      // Display the selected text in the text box
+      document.getElementById("textBox").innerHTML = selectedText;
+    } catch (error) {
+      console.error("Error fetching or processing CSV file:", error);
+      document.getElementById("textBox").innerHTML = "Error loading text.";
     }
-  </script>
+  }
+</script>
 </head>
 <body>
   <h1>My Page Title</h1>
