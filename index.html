@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random CSV Text Example</title>
+  <!-- Include PapaParse from a CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-w8dy0cGjFaK6CBBgV9I7K8JPHRj5F8pD1zWgXqwVBbjh9q+Tm00qHcYzAQ1LJXdIcN2A72L8m0p0hkh24oBnwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* Styling for the text box */
+    #textBox {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 300px;
+      height: 150px;
+      margin-top: 10px;
+      white-space: pre-wrap; /* Preserve line breaks and white space */
+    }
+  </style>
+  <script>
+    // This async function fetches the CSV file, parses it with PapaParse,
+    // picks a random row (assuming the text is in the first column), and displays it.
+    async function displayText() {
+      try {
+        // Fetch the CSV file (ensure texts.csv is in the same directory)
+        const response = await fetch('texts.csv');
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const csvText = await response.text();
+
+        // Use PapaParse to parse the CSV text.
+        // It correctly handles cells with commas, line breaks, and multiple paragraphs.
+        const parsedData = Papa.parse(csvText, {
+          header: false,
+          skipEmptyLines: true,
+        });
+
+        // parsedData.data is an array of rows, where each row is an array of cell values.
+        const rows = parsedData.data;
+        // Pick a random row (assuming text is stored in the first column)
+        const randomIndex = Math.floor(Math.random() * rows.length);
+        let selectedText = rows[randomIndex][0];
+
+        // Remove a leading comma, if present
+        selectedText = selectedText.replace(/^,/, '');
+
+        // Display the selected text in the text box
+        document.getElementById("textBox").innerHTML = selectedText;
+      } catch (error) {
+        console.error("Error fetching or processing CSV file:", error);
+        document.getElementById("textBox").innerHTML = "Error loading text.";
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>My Page Title</h1>
+  <p>This is some introductory text displayed on the page.</p>
+  <button onclick="displayText()">Show Random Text</button>
+  <div id="textBox"></div>
+  <p>This is additional text that always appears below the box.</p>
+</body>
+</html>
