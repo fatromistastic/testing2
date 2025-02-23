@@ -18,49 +18,27 @@
     }
   </style>
   <script>
-    async function displayText() {
-      try {
-        // Fetch the CSV file (ensure texts.csv is in the same directory)
-        const response = await fetch('texts.csv');
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const csvText = await response.text();
-        console.log("CSV file content:", csvText);
-
-        // Parse the CSV using PapaParse.
-        const parsedData = Papa.parse(csvText, {
-          header: false,
-          skipEmptyLines: true,
-        });
-        console.log("Parsed CSV data:", parsedData);
-
-        // Get the rows array.
-        let rows = parsedData.data;
-        console.log("All rows:", rows);
-
-        // Filter out rows that don't have any text in the first column.
-        rows = rows.filter(row => row[0] && row[0].trim() !== "");
-        console.log("Filtered rows:", rows);
-
-        if (rows.length === 0) {
-          document.getElementById("textBox").innerHTML = "CSV file is empty or all rows are invalid.";
-          return;
-        }
-
-        // Pick a random row (text is in the first column)
-        const randomIndex = Math.floor(Math.random() * rows.length);
-        let selectedText = rows[randomIndex][0];
-        console.log("Selected text:", selectedText);
-
-        // Display the selected text in the text box.
-        document.getElementById("textBox").innerHTML = selectedText;
-      } catch (error) {
-        console.error("Error fetching or processing CSV file:", error);
-        document.getElementById("textBox").innerHTML = "Error loading text.";
+  async function displayText() {
+    try {
+      const response = await fetch('texts.json');
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
+      const textArray = await response.json();
+      if (!Array.isArray(textArray) || textArray.length === 0) {
+        document.getElementById("textBox").innerHTML = "JSON file is empty or invalid.";
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * textArray.length);
+      const selectedText = textArray[randomIndex];
+      document.getElementById("textBox").innerHTML = selectedText;
+    } catch (error) {
+      console.error("Error fetching or processing JSON file:", error);
+      document.getElementById("textBox").innerHTML = "Error loading text.";
     }
-  </script>
+  }
+</script>
+
 </head>
 <body>
   <h1>My Page Title</h1>
