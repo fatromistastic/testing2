@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Random CSV Text Example</title>
-  <!-- Include PapaParse from a CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-w8dy0cGjFaK6CBBgV9I7K8JPHRj5F8pD1zWgXqwVBbjh9q+Tm00qHcYzAQ1LJXdIcN2A72L8m0p0hkh24oBnwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Include PapaParse from a CDN without the integrity attribute -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   <style>
     /* Styling for the text box */
     #textBox {
@@ -62,3 +62,4 @@
   <p>This is additional text that always appears below the box.</p>
 </body>
 </html>
+
