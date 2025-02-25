@@ -11,7 +11,7 @@
       padding: 0;
       box-sizing: border-box;
     }
-
+    
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       background-color: #111;
@@ -19,20 +19,20 @@
       padding: 20px;
       text-align: center;
     }
-
+    
     /* Central Block (Floating Background Image) */
     .central-block {
       position: relative;
-      width: 600px;               /* Fixed width for the block */
-      margin: 40px auto;          /* Center horizontally with some vertical margin */
-      padding: 40px;
+      width: 800px;         /* Increased width */
+      height: 400px;        /* Increased height */
+      margin: 40px auto;    /* Center horizontally with vertical margin */
       background: url("abstract_design.jpg") no-repeat center center;
-      background-size: contain;   /* The image is contained within the block */
+      background-size: cover;   /* Use cover so the image fills the block */
       border: 1px solid #333;
       border-radius: 8px;
       overflow: hidden;
     }
-
+    
     /* Dark overlay to ensure text readability */
     .central-block::before {
       content: "";
@@ -44,24 +44,30 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 0;
     }
-
+    
     /* Content over the background image */
     .central-block-content {
       position: relative;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 20px;
     }
-
+    
     .central-block h1 {
       margin-bottom: 20px;
       font-size: 2.5rem;
     }
-
+    
     .central-block p {
       margin-bottom: 20px;
       font-size: 1.1rem;
       line-height: 1.4;
     }
-
+    
     .central-block button {
       background: #333;
       color: #fff;
@@ -70,7 +76,7 @@
       font-size: 1rem;
       cursor: pointer;
     }
-
+    
     /* Content Section (Text Box & Additional Text) */
     .content-section {
       margin-top: 40px;
@@ -81,7 +87,7 @@
       margin-left: auto;
       margin-right: auto;
     }
-
+    
     #textBox {
       border: 1px solid #ccc;
       padding: 20px;
@@ -117,7 +123,7 @@
   </script>
 </head>
 <body>
-  <!-- Central Block with background image and overlaid text -->
+  <!-- Central Block with Background Image and Overlaid Text -->
   <div class="central-block">
     <div class="central-block-content">
       <h1>My Page Title</h1>
@@ -125,7 +131,7 @@
       <button onclick="displayText()">Show Random Text</button>
     </div>
   </div>
-
+  
   <!-- Content Section with Text Box -->
   <div class="content-section">
     <div id="textBox"></div>
