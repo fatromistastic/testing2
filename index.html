@@ -1,31 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Random JSON Text Example</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Page Title</title>
   <style>
-    /* Banner styling for the title */
-    h1 {
-      background-color: #000; /* Black background */
-      color: #fff;            /* White text */
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      padding: 20px;
+    /* Reset some default styles */
+    * {
       margin: 0;
-      text-align: center;
+      padding: 0;
+      box-sizing: border-box;
     }
-    
-    /* Styling for the text box */
+
+    /* Page Background & Text */
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #111; /* Dark background for the page */
+      color: #fff; /* White text */
+    }
+
+    /* Hero (Central Block) */
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 600px; /* Adjust as needed */
+      background: url("abstract-design.jpg") no-repeat center center;
+      background-size: contain; /* or 'cover' if you prefer a full-bleed look */
+    }
+
+    /* Optional semi-transparent overlay for readability */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3); /* Dark overlay */
+    }
+
+    /* Content on top of the hero image */
+    .hero-content {
+      position: relative; /* Stacks above the overlay */
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Title, Intro Text, and Button */
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    button {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* Main Content Section (Text Box + Additional Text) */
+    .content-section {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
     #textBox {
       border: 1px solid #ccc;
       padding: 10px;
       width: 300px;
-      margin-top: 10px;
-      white-space: pre-wrap; /* Preserve line breaks and white space */
+      margin: 20px auto;
+      white-space: pre-wrap; /* Preserve line breaks */
       min-height: 50px;
+      background-color: #222; /* Slightly lighter box background */
+      color: #fff;            /* White text inside the box */
     }
   </style>
+
   <script>
+    // Same logic to fetch and display a random line from texts.json
     async function displayText() {
       try {
         const response = await fetch('texts.json');
@@ -34,10 +99,12 @@
         }
         const textArray = await response.json();
         console.log("Fetched JSON:", textArray);
+        
         if (!Array.isArray(textArray) || textArray.length === 0) {
           document.getElementById("textBox").innerHTML = "JSON file is empty or invalid.";
           return;
         }
+
         const randomIndex = Math.floor(Math.random() * textArray.length);
         const selectedText = textArray[randomIndex];
         document.getElementById("textBox").innerHTML = selectedText;
@@ -48,12 +115,22 @@
     }
   </script>
 </head>
+
 <body>
-  <h1>My Page Title</h1>
-  <p>This is some introductory text displayed on the page.</p>
-  <button onclick="displayText()">Show Random Text</button>
-  <div id="textBox"></div>
-  <p>This is additional text that always appears below the box.</p>
+  <!-- Hero Section with Abstract Design -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>My Page Title</h1>
+      <p>This is some introductory text displayed on the page.</p>
+      <button onclick="displayText()">Show Random Text</button>
+    </div>
+  </div>
+
+  <!-- Content Section with Text Box -->
+  <div class="content-section">
+    <div id="textBox"></div>
+    <p>This is additional text that always appears below the box.</p>
+  </div>
 </body>
 </html>
 
