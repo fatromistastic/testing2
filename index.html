@@ -11,56 +11,58 @@
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       background-color: #111;
       color: #fff;
       padding: 20px;
+      text-align: center;
     }
-    
-    /* Central dark block container */
+
+    /* Central Block (Floating Background Image) */
     .central-block {
-      background-color: #222;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
+      position: relative;
+      width: 600px;               /* Fixed width for the block */
+      margin: 40px auto;          /* Center horizontally with some vertical margin */
+      padding: 40px;
+      background: url("abstract_design.jpg") no-repeat center center;
+      background-size: contain;   /* The image is contained within the block */
+      border: 1px solid #333;
       border-radius: 8px;
+      overflow: hidden;
     }
-    
-    /* Floating image styling */
-    .floating-image {
-      flex: 0 0 300px; /* Fixed width */
+
+    /* Dark overlay to ensure text readability */
+    .central-block::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
     }
-    
-    .floating-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 4px;
+
+    /* Content over the background image */
+    .central-block-content {
+      position: relative;
+      z-index: 1;
     }
-    
-    /* Text content styling within the central block */
-    .text-content {
-      flex: 1;
-      text-align: left;
+
+    .central-block h1 {
+      margin-bottom: 20px;
+      font-size: 2.5rem;
     }
-    
-    .text-content h1 {
-      margin-bottom: 10px;
-      font-size: 2rem;
-    }
-    
-    .text-content p {
-      margin-bottom: 10px;
+
+    .central-block p {
+      margin-bottom: 20px;
       font-size: 1.1rem;
       line-height: 1.4;
     }
-    
-    .text-content button {
+
+    .central-block button {
       background: #333;
       color: #fff;
       border: none;
@@ -68,22 +70,27 @@
       font-size: 1rem;
       cursor: pointer;
     }
-    
-    /* Content Section below the central block */
+
+    /* Content Section (Text Box & Additional Text) */
     .content-section {
-      text-align: center;
+      margin-top: 40px;
       padding: 40px 20px;
+      background-color: #222;
+      border-radius: 8px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    
+
     #textBox {
       border: 1px solid #ccc;
       padding: 20px;
-      width: 600px; /* Wider text box */
-      margin: 20px auto;
+      width: 100%;
       white-space: pre-wrap;
-      background-color: #222;
+      background-color: #333;
       color: #fff;
       min-height: 50px;
+      margin-bottom: 20px;
     }
   </style>
   <script>
@@ -110,25 +117,23 @@
   </script>
 </head>
 <body>
-  <!-- Central block with a floating abstract image and text content -->
+  <!-- Central Block with background image and overlaid text -->
   <div class="central-block">
-    <div class="floating-image">
-      <img src="abstract_design.jpg" alt="Abstract Design" />
-    </div>
-    <div class="text-content">
+    <div class="central-block-content">
       <h1>My Page Title</h1>
       <p>This is some introductory text displayed on the page.</p>
       <button onclick="displayText()">Show Random Text</button>
     </div>
   </div>
-  
-  <!-- Content section with text box and additional text -->
+
+  <!-- Content Section with Text Box -->
   <div class="content-section">
     <div id="textBox"></div>
     <p>This is additional text that always appears below the box.</p>
   </div>
 </body>
 </html>
+
 
 
 
