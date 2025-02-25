@@ -5,62 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>My Page Title</title>
   <style>
-    /* Reset some default styles */
+    /* Reset styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-    /* Page Background & Text */
+    
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background-color: #111; /* Dark background for the page */
-      color: #fff; /* White text */
+      background-color: #111;
+      color: #fff;
+      padding: 20px;
     }
-
-    /* Hero (Central Block) */
-    .hero {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* Use a viewport-based height so the hero isn't too tall */
-      height: 80vh;
-      background: url("abstract_design.jpg") no-repeat center center;
-      background-size: cover; /* Fill the container while preserving aspect ratio */
-    }
-
-    /* Optional semi-transparent overlay for readability */
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0; /* top, right, bottom, left = 0 */
-      background: rgba(0, 0, 0, 0.3); /* Slight dark overlay */
-    }
-
-    /* Content on top of the hero image */
-    .hero-content {
-      position: relative; /* Stacks above the overlay */
-      text-align: center;
+    
+    /* Central dark block container */
+    .central-block {
+      background-color: #222;
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-radius: 8px;
     }
-
-    /* Title, Intro Text, and Button */
-    h1 {
-      margin-bottom: 20px;
-      font-size: 2.5rem;
+    
+    /* Floating image styling */
+    .floating-image {
+      flex: 0 0 300px; /* Fixed width */
     }
-
-    p {
-      margin-bottom: 20px;
+    
+    .floating-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+    
+    /* Text content styling within the central block */
+    .text-content {
+      flex: 1;
+      text-align: left;
+    }
+    
+    .text-content h1 {
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+    
+    .text-content p {
+      margin-bottom: 10px;
       font-size: 1.1rem;
       line-height: 1.4;
     }
-
-    button {
+    
+    .text-content button {
       background: #333;
       color: #fff;
       border: none;
@@ -68,27 +68,25 @@
       font-size: 1rem;
       cursor: pointer;
     }
-
-    /* Main Content Section (Text Box + Additional Text) */
+    
+    /* Content Section below the central block */
     .content-section {
       text-align: center;
-      padding: 50px 20px;
+      padding: 40px 20px;
     }
-
+    
     #textBox {
       border: 1px solid #ccc;
       padding: 20px;
       width: 600px; /* Wider text box */
       margin: 20px auto;
-      white-space: pre-wrap; /* Preserve line breaks */
-      background-color: #222; /* Slightly lighter box background */
-      color: #fff;            /* White text inside the box */
+      white-space: pre-wrap;
+      background-color: #222;
+      color: #fff;
       min-height: 50px;
     }
   </style>
-
   <script>
-    // Same logic to fetch and display a random line from texts.json
     async function displayText() {
       try {
         const response = await fetch('texts.json');
@@ -97,12 +95,10 @@
         }
         const textArray = await response.json();
         console.log("Fetched JSON:", textArray);
-
         if (!Array.isArray(textArray) || textArray.length === 0) {
           document.getElementById("textBox").innerHTML = "JSON file is empty or invalid.";
           return;
         }
-
         const randomIndex = Math.floor(Math.random() * textArray.length);
         const selectedText = textArray[randomIndex];
         document.getElementById("textBox").innerHTML = selectedText;
@@ -113,18 +109,20 @@
     }
   </script>
 </head>
-
 <body>
-  <!-- Hero Section with Abstract Design -->
-  <div class="hero">
-    <div class="hero-content">
+  <!-- Central block with a floating abstract image and text content -->
+  <div class="central-block">
+    <div class="floating-image">
+      <img src="abstract_design.jpg" alt="Abstract Design" />
+    </div>
+    <div class="text-content">
       <h1>My Page Title</h1>
       <p>This is some introductory text displayed on the page.</p>
       <button onclick="displayText()">Show Random Text</button>
     </div>
   </div>
-
-  <!-- Content Section with Text Box -->
+  
+  <!-- Content section with text box and additional text -->
   <div class="content-section">
     <div id="textBox"></div>
     <p>This is additional text that always appears below the box.</p>
