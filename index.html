@@ -119,6 +119,8 @@
           throw new Error("Network response was not ok");
         }
         const textArray = await response.json();
+        document.getElementById("subtitle").innerHTML =
+  `Or ${textArray.length} things I think I think about art`;
         console.log("Fetched JSON:", textArray);
         if (!Array.isArray(textArray) || textArray.length === 0) {
           document.getElementById("textBox").innerHTML = "JSON file is empty or invalid.";
@@ -139,6 +141,7 @@
   <div class="central-block">
     <div class="central-block-content">
       <h1>Thoughts about art and my music</h1>
+      <h2 id="subtitle"></h2>
       <p>Every composer I know is <i>haunted</i> by the question ‘<i>What sort of music do you write?</i>’<br>
       Clicking the question below randomly retrieves a thought I’ve had about my music, or art in general, that I think is meaningful and shares something about my music and why I make art. Sometimes it will simply attempt to answer the question '<i>what is your music about?</i>' and '<i>why do you make it?</i>'</p>
       <button onclick="displayText()">What sort of music do you write?</button>
