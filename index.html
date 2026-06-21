@@ -133,25 +133,45 @@
     console.error("Error loading subtitle:", error);
   }
 }
-    async function displayText() {
-      try {
-        const response = await fetch('texts.json');
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const textArray = await response.json();
-        if (!Array.isArray(textArray) || textArray.length === 0) {
-          document.getElementById("textBox").innerHTML = "JSON file is empty or invalid.";
-          return;
-        }
-        const randomIndex = Math.floor(Math.random() * textArray.length);
-        const selectedText = textArray[randomIndex];
-        document.getElementById("textBox").innerHTML = selectedText;
-      } catch (error) {
-        console.error("Error fetching or processing JSON file:", error);
-        document.getElementById("textBox").innerHTML = "Error loading text.";
-      }
+let cachedTextArray = null;
+
+async function getTextArray() {
+  if (cachedTextArray !== null) {
+    return cachedTextArray;
+  }
+  const response = await fetch('texts.json');
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  cachedTextArray = await response.json();
+  return cachedTextArray;
+}
+
+async function loadSubtitle() {
+  try {
+    const textArray = await getTextArray();
+    document.getElementById("subtitle").innerHTML =
+      `(Or ${textArray.length} things I think I think about art)`;
+  } catch (error) {
+    console.error("Error loading subtitle:", error);
+  }
+}
+
+async function displayText() {
+  try {
+    const textArray = await getTextArray();
+    if (!Array.isArray(textArray) || textArray.length === 0) {
+      document.getElementById("textBox").innerHTML = "JSON file is empty or invalid.";
+      return;
     }
+    const randomIndex = Math.floor(Math.random() * textArray.length);
+    const selectedText = textArray[randomIndex];
+    document.getElementById("textBox").innerHTML = selectedText;
+  } catch (error) {
+    console.error("Error fetching or processing JSON file:", error);
+    document.getElementById("textBox").innerHTML = "Error loading text.";
+  }
+}
   </script>
 </head>
 <body>
