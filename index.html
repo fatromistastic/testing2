@@ -117,22 +117,7 @@
     }
   </style>
   <script>
-    async function loadSubtitle() {
-  try {
-    const response = await fetch('texts.json');
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const textArray = await response.json();
-
-    document.getElementById("subtitle").innerHTML =
-      `(Or ${textArray.length} things I think I think about art)`;
-
-  } catch (error) {
-    console.error("Error loading subtitle:", error);
-  }
-}
+    
 let cachedTextArray = null;
 
 async function getTextArray() {
